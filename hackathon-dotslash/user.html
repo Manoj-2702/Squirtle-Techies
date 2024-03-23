@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydra AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <style>
+        body {
+            background-image: url("static/background.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: 'League Spartan';
+        }
+        .container {
+            max-width: 1000px;
+            max-height: 670px;
+            margin: 80px auto;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="tel"], select, textarea {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 15px;
+        }
+        .image-upload {
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 45px;
+        }
+        label {
+            font-size: 20px;
+        }
+        #map {
+            height: 300px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span style="color: #75e1e5;">Report</span> Problem</h1>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Your Name" required>
+            <label for="name">Phone no.:</label>
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+            <label for="category">Category:</label>
+            <select id="category">
+                <option value="scarcity">Scarcity</option>
+                <option value="drainage">Drainage</option>
+                <option value="flooding">Flooding</option>
+                <option value="leakage">Leakage</option>
+                <option value="other">Other</option>
+            </select>
+            <label for="description">Description:</label>
+            <textarea id="description" placeholder="Describe the problem in detail" required></textarea>
+            <label for="location">Location:</label>
+            <div id="map"></div>
+            <input type="text" id="location" placeholder="Street Address, Landmark" required>
+            <div class="image-upload">
+                <label for="image">Upload Image (Optional):</label>
+                <input type="file" id="image" accept="image/*">
+            </div>
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').fitWorld();
+
+        // Add a tile layer to the map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Function to get the user's location
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+
+                        // Update the map view
+                        map.setView([latitude, longitude], 13);
+
+                        // Add a marker to the map
+                        var marker = L.marker([latitude, longitude]).addTo(map);
+
+                        // Fetch the pincode and address using reverse geocoding
+                        fetchAddress(latitude, longitude);
+                    },
+                    function(error) {
+                        console.error('Error getting location:', error);
+                    }
+                );
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
+        }
+
+        // Call the getLocation function to retrieve the user's location
+        getLocation();
+
+        // Function to fetch the address using reverse geocoding
+        function fetchAddress(latitude, longitude) {
+            var nominatimUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + latitude + '&lon=' + longitude;
+
+            fetch(nominatimUrl)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data.address) {
+                        var address = data.address.address29;
+                        console.log('Address:', address);
+                        
+                        var addressParts = address.split(',');
+                        var pincode = addressParts.length > 2 ? addressParts[2].trim() : '';
+                        var locationInput = document.getElementById('location');
+                        locationInput.value = `${locationInput.value}, ${pincode}`;
+                    } else {
+                        console.error('Unable to fetch address');
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error fetching address:', error);
+                });
+        }
+    </script>
+</body>
+</html>
