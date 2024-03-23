@@ -1,6 +1,6 @@
 # Hydra: AI-driven Geospatial Water Management System
 
-Hydra is an innovative solution for monitoring and managing water resources using advanced artificial intelligence and geospatial technology. This system combines cutting-edge AI algorithms with geolocation data to provide real-time insights into water scarcity issues and facilitate efficient resource allocation.
+Hydra is an innovative solution for monitoring and managing water resources using advanced artificial intelligence and geospatial technology. This system combines NLP algorithms with geolocation data to provide real-time insights into water scarcity issues and facilitate efficient water distribution.
 
 ## Features
 - **AI-Powered Analysis:** Hydra utilizes NLP algorithms to analyze data from various sources, specifically twitter for now, to identify areas experiencing water scarcity.
