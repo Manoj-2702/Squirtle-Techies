@@ -1,0 +1,47 @@
+body {
+    font-family: 'League Spartan';
+    background-image: url('background.png');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    color: azure;
+}
+
+#header {
+    padding: 30px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#logo h1 {
+    font-size: 60px;
+    margin-left: 10px;
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin-left: 600px;
+    font-size: 25px;
+    padding: 20px;
+}
+
+#navbar ul li {
+    display: inline;
+    margin-right: 40px;
+}
+
+#navbar ul li a {
+    color: azure;
+    text-decoration: none;
+}
+
+#content {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 22px;
+}
+
+p{
+    margin-right:110px;
+    margin-left:110px;
+}
