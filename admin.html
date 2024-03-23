@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hydra AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+    <style>
+      body {
+        background-image: url("static/background.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        font-family: "League Spartan";
+      }
+      .container {
+        width: 600px;
+        height: 650px;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.25);
+        display: inline-block;
+        margin-left: 50px;
+      }
+      #map {
+        width: 700px; /* Adjust width of the map */
+        height: 600px;
+        margin-top: 45px;
+        margin-left: 30px; /* Add margin between container and map */
+        border-radius: 20px;
+        display: inline-block; /* Display map inline */
+        vertical-align: top; /* Align map with the top of the container */
+      }
+      .admin {
+        white-space: nowrap;
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin">
+      <div class="container">
+        <div class="admin">
+          <select id="zoneSelect">
+            <option value="simple">Select</option>
+            <option value="Yelahaṅka Zone">Yelahaṅka Zone</option>
+            <option value="Dasarahal̥l̥i Zone">Dasarahal̥l̥i Zone</option>
+            <option value="Rājarājēśvarinagara Zone">
+              Rājarājēśvarinagara Zone
+            </option>
+            <option value="Bommanahal̥l̥i Zone">Bommanahal̥l̥i Zone</option>
+            <option value="South Zone">South Zone</option>
+            <option value="West Zone">West Zone</option>
+            <option value="East Zone">East Zone</option>
+            <option value="Mahādēvapura Zone">Mahādēvapura Zone</option>
+          </select>
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
+
+    <script>
+      var map = L.map("map", { zoomSnap: 0 }).setView(
+        [12.900751967850363, 77.5700784065958],
+        12
+      );
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 15,
+      }).addTo(map);
+
+      const zoneCoordinates = {
+        "Yelahaṅka Zone": [13.094454, 77.586014],
+        "Dasarahal̥l̥i Zone": [13.094694, 77.836243],
+        "Rājarājēśvarinagara Zone": [12.9241627, 77.5217937],
+        "Bommanahal̥l̥i Zone": [12.899162, 77.616859],
+        "South Zone": [12.925707, 77.622575],
+        "West Zone": [13.007526, 77.554683],
+        "East Zone": [13.022933, 77.636683],
+        "Mahādēvapura Zone": [12.988, 77.6895],
+      };
+
+      // Event listener for the dropdown
+      document
+        .getElementById("zoneSelect")
+        .addEventListener("change", function () {
+          var selectedZone = this.value;
+          var coordinates = zoneCoordinates[selectedZone];
+          if (coordinates) {
+            map.setView(coordinates, 20); // Adjust the zoom level as needed
+          }
+        });
+
+      // Fetch locations from the database
+      fetch("/get_locations")
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((location) => {
+            const { latitude, longitude, color } = location; // Assuming the color is provided in the data
+            const marker = L.marker([parseFloat(latitude), parseFloat(longitude)]);
+            if (color) {
+              marker.setIcon(L.icon({
+                iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-' + color + '.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+              }));
+            }
+            marker.addTo(map);
+          });
+        })
+        .catch((error) => console.error("Error fetching locations:", error));
+    </script>
+  </body>
+</html>

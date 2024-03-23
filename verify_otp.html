@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hydra AI - Verify OTP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <style>
+      body {
+        background-image: url("static/login.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        font-family: "League Spartan";
+      }
+      .container {
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 20px;
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.25);
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-bottom: 15px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #75e1e5;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Verify OTP</h1>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+      <form method="POST" action="{{ url_for('verify_otp') }}">
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" name="otp" required />
+        <button type="submit">Verify OTP</button>
+      </form>
+    </div>
+  </body>
+</html>
