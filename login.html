@@ -1,69 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hydra AI - Login</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-  </head>
-  <body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
     <div class="container">
-      <h1>Login</h1>
-      {% if error %}
-      <p class="error">{{ error }}</p>
-      {% endif %}
-      <form method="POST" action="{{ url_for('login') }}">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required />
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Don't have an account? <a href="{{ url_for('register') }}">Register</a>
-      </p>
+        <h1>Login</h1>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <form method="POST" action="{{ url_for('login') }}">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+            <button type="submit">Login</button>
+        </form>
+        <p style="width: 400px;">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
     </div>
     <style>
-      body {
+     html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
         background-image: url("static/login.png");
         background-size: cover;
         background-repeat: no-repeat;
+        background-position: center center; /* Centers the background image */
         font-family: "League Spartan";
-      }
-      .container {
-        max-width: 400px;
-        margin: 100px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-size: 22px;
+    }
+
+    .container {
+        width: 500px;
         padding: 20px;
         border-radius: 20px;
         background-color: rgba(255, 255, 255, 0.25);
-      }
-      h1 {
+        margin-right: 600px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
         text-align: center;
         margin-bottom: 20px;
-      }
-      label {
+        font-size: 50px;
+    }
+
+    label {
         display: block;
         margin-bottom: 5px;
-      }
-      input[type="text"],
-      input[type="password"] {
-        width: 100%;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: calc(100% - 22px);
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 3px;
-        margin-bottom: 15px;
-      }
-      button {
+        margin-bottom: 20px;
+        outline: none;
+    }
+
+    button {
         width: 100%;
         padding: 10px;
         background-color: #75e1e5;
@@ -71,10 +84,41 @@
         border: none;
         border-radius: 3px;
         cursor: pointer;
-      }
-      .error {
-        color: red;
-      }
+        outline: none;
+        font-size: 20px;
+        margin-top: 15px;
+    }
+
+    p {
+        margin-left: 95px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            width: 90%; /* Adjust container width for smaller screens */
+            margin-right: 0; /* Reset margin for smaller screens */
+        }
+
+        h1 {
+            font-size: 30px; /* Reduce font size for better readability on smaller screens */
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            font-size: 16px; /* Adjust input font size for better readability on smaller screens */
+        }
+
+        button {
+            font-size: 16px; /* Adjust button font size for better readability on smaller screens */
+        }
+
+        p {
+            margin-left: 20px; /* Adjust paragraph margin for better readability on smaller screens */
+        }
+    }
+
+       
     </style>
   </body>
 </html>

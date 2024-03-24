@@ -1,84 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hydra AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="header">
-        <div id="logo">
-            <h1><span style="color: #75e1e5;">HYDRA</span> AI</h1>
-        </div>
-        <div id="navbar">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="{{ url_for('admin_login') }}">Administrative</a></li>
-                <li>
-                    <div class="dropdown">
-                        <a href="#">User</a>
-                        <div class="dropdown-content">
-                            <a href="/login">Login</a>
-                            <a href="/register">Register</a>
-                        </div>
-                    </div>
-                </li>
-                <li><a href="/user">Blog</a></li>
-            </ul>
-        </div>
+      <div id="logo">
+        <h1><span style="color: #75e1e5">HYDRA</span> AI</h1>
+      </div>
+      <div id="navbar">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="{{ url_for('admin_login')}}">Administrative</a></li>
+          <li>
+            <div class="dropdown">
+              <a href="#">User</a>
+              <div class="dropdown-content">
+                <a href="/login" style="color: #75e1e5;">Login</a>
+                <a href="/register" style="color: #75e1e5;">Register</a>
+              </div>
+            </div>
+          </li>
+          <li><a href="/user">Blog</a></li>
+        </ul>
+      </div>
     </div>
     <div id="content">
-        <h1>AI-driven Geospatial <span style="color: #75e1e5;">Water</span> Management System</h1>
-        <p>Hydra AI is an innovative solution for monitoring and managing water resources using advanced artificial intelligence and geospatial technology. This system combines NLP algorithms with geolocation data to provide real-time insights into issues  into water-related challenges like scarcity, quality, and flooding.  Additionally, Hydra AI facilitates efficient water distribution, optimizing resource allocation and ensuring sustainable usage.</p>
+      <h1>
+        AI-driven Geospatial
+        <span style="color: #75e1e5">Water</span> Management System
+      </h1>
+      <p>
+        Hydra AI is an innovative solution for monitoring and managing water
+        resources using advanced artificial intelligence and geospatial
+        technology. This system combines NLP algorithms with geolocation data to
+        provide real-time insights into issues into water-related challenges
+        like scarcity, quality, and flooding. Additionally, Hydra AI facilitates
+        efficient water distribution, optimizing resource allocation and
+        ensuring sustainable usage.
+      </p>
     </div>
 
     <style>
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+     .dropdown {
+      position: relative;
+      display: inline-block;
+    }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
 
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
+    .dropdown-content a {
+      color: #333; /* Change the color here */
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
 
-        .dropdown-content a:hover {
-            background-color: #ddd;
-        }
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
     </style>
 
     <script>
-        $(document).ready(function() {
-            $(".dropdown").hover(
-                function() {
-                    $(".dropdown-content").stop(true, true).fadeIn(200);
-                },
-                function() {
-                    $(".dropdown-content").stop(true, true).fadeOut(200);
-                }
-            );
-        });
+      $(document).ready(function () {
+        $(".dropdown").hover(
+          function () {
+            $(".dropdown-content").stop(true, true).fadeIn(200);
+          },
+          function () {
+            $(".dropdown-content").stop(true, true).fadeOut(200);
+          }
+        );
+      });
     </script>
-</body>
+  </body>
 </html>

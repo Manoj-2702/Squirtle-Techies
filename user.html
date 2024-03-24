@@ -27,23 +27,47 @@
       crossorigin=""
     ></script>
     <style>
-      body {
-        background-image: url("static/background.png");
-        background-size: cover;
-        background-repeat: no-repeat;
-        font-family: "League Spartan";
-      }
-      .container {
-        max-width: 1000px;
-        max-height: 670px;
-        margin: 80px auto;
-        padding: 20px;
-        border-radius: 20px;
-        background-color: rgba(255, 255, 255, 0.25);
-      }
+     html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("static/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; /* Centers the background image */
+    font-family: "League Spartan";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-size: 22px;
+}
+
+.container {
+    width: 70%;
+    height: 700px;
+    margin: 80px auto;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
       h1 {
         text-align: center;
         margin-bottom: 20px;
+      }
+      .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        margin-left:6%;
+      }
+      .form-row > div {
+        width: 49%;
       }
       label {
         display: block;
@@ -57,11 +81,9 @@
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 3px;
-        margin-bottom: 15px;
+        margin-right:10px;
       }
-      .image-upload {
-        margin-bottom: 20px;
-      }
+
       h1 {
         font-size: 45px;
       }
@@ -72,45 +94,99 @@
         height: 300px;
         margin-bottom: 15px;
       }
+      button[type="submit"] {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #75e1e5;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button[type="submit"]:hover {
+        background-color: #5ac2c6;
+      }
+
+      @media (max-width: 768px) {
+    .container {
+        width: 90%; /* Adjust container width for smaller screens */
+        height: auto; /* Adjust container height to auto for better responsiveness */
+        margin: 60px auto; /* Adjust margin for smaller screens */
+    }
+
+    h1 {
+        font-size: 30px; /* Reduce font size for better readability on smaller screens */
+    }
+
+    .form-row > div {
+        width: 100%; /* Stack form elements vertically on smaller screens */
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    select,
+    textarea {
+        width: 100%; /* Adjust input width for smaller screens */
+        margin-right: 0; /* Reset margin for smaller screens */
+    }
+
+    button[type="submit"] {
+        font-size: 16px; /* Adjust button font size for better readability on smaller screens */
+    }
+}
     </style>
   </head>
   <body>
     <div class="container">
-      <h1><span style="color: #75e1e5">Report</span> Problem</h1>
+      <h1>Report Problem</h1>
       <form method="POST" action="{{ url_for('submit_data') }}">
-        <label for="category">Category:</label>
-        <select id="category" name="category">
-          <option value="scarcity">Scarcity</option>
-          <option value="drainage">Drainage</option>
-          <option value="flooding">Flooding</option>
-          <option value="leakage">Leakage</option>
-          <option value="other">Other</option>
-        </select>
-        <label for="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Describe the problem in detail"
-          value="{{ user_data.description}}"
-          required
-        ></textarea>
-        <label for="latitude">Latitude:</label>
-        <input
-          type="text"
-          id="latitude"
-          name="latitude"
-          value="{{ user_data.latitude}}"
-        />
-
-        <label for="longitude">Longitude:</label>
-        <input
-          type="text"
-          id="longitude"
-          name="longitude"
-          value="{{ user_data.longitude}}"
-        />
-        <label for="location">Location:</label>
+        <div class="form-row">
+          <div>
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+              <option value="scarcity">Scarcity</option>
+              <option value="drainage">Drainage</option>
+              <option value="flooding">Flooding</option>
+              <option value="leakage">Leakage</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="description">Description:</label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Describe the problem in detail"
+              value="{{ user_data.description}}"
+              required
+            ></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="latitude">Latitude:</label>
+            <input
+              type="text"
+              id="latitude"
+              name="latitude"
+              value="{{ user_data.latitude}}"
+            />
+          </div>
+          <div>
+            <label for="longitude">Longitude:</label>
+            <input
+              type="text"
+              id="longitude"
+              name="longitude"
+              value="{{ user_data.longitude}}"
+            />
+          </div>
+        </div>
         <div id="map"></div>
+        <label for="location" >Location:</label>
         <input
           type="text"
           id="location"
@@ -118,12 +194,9 @@
           placeholder="Street Address, Landmark"
           required
           value="{{ user_data.location }}"
+          style="width: 1000px;"
         />
-        <div class="image-upload">
-          <label for="image">Upload Image (Optional):</label>
-          <input type="file" id="image" accept="image/*" />
-        </div>
-        <button type="submit">Submit Report</button>
+        <button type="submit"  style="margin-top:20px;">Submit Report</button>
       </form>
     </div>
 
