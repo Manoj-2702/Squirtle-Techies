@@ -25,7 +25,7 @@ geolocator=Nominatim(user_agent="my_app")
 
 
 # Set the API key directly in the script (for testing purposes)
-os.environ['GOOGLE_API_KEY'] = 'AIzaSyAR4lyiWOFFITv9dvLmT8Ou5hXIVf_Y_M0'
+os.environ['GOOGLE_API_KEY'] = 'Your api key'
 
 # Configure the SDK with the API key
 genai.configure(api_key=os.environ['GOOGLE_API_KEY'])
